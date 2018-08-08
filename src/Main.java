@@ -1,6 +1,64 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+
+        /*Scanner sc = new Scanner(System.in);
+
+        int aantalTestGevallen = Integer.parseInt(sc.nextLine());
+
+        for(int testGevalId=0 ; testGevalId<aantalTestGevallen; testGevalId++){
+
+            String[] eersteLijn = sc.nextLine().split(" ");
+
+            int aantalVerdiepingen = Integer.parseInt(eersteLijn[0]);
+            Graaf graaf =new Graaf(aantalVerdiepingen);
+
+
+            int aantalRadliften = Integer.parseInt(eersteLijn[1]);
+
+            for(int radliftId =1 ; radliftId<aantalRadliften+1; radliftId++){
+
+                String[] radliftLijn = sc.nextLine().split(" ");
+                //verwerking van de radliftlijn
+
+                int onderVerdiep = Integer.parseInt(radliftLijn[0]);
+                int bovenVerdiep = Integer.parseInt(radliftLijn[1]);
+                int stap = Integer.parseInt(radliftLijn[2]);
+
+                //hiermee de juiste pijlen genereren
+                ArrayList<FakePijl> fakePijlen = FakePijl.genereerPijlen(onderVerdiep, bovenVerdiep, stap);
+
+
+
+                //deze lijst toevoegen aan de graaf
+                //for elke pijl in de arraylist ofzo
+                //graaf.voegPijlToe(radliftId, van,naar);
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+        }//einde verwerking van 1 testgeval
+*/
+
+
+        ArrayList<FakePijl> fp = FakePijl.genereerPijlen(1,3,1);
+
+        System.out.println("klaar");
+
     }
 }
