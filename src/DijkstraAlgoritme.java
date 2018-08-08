@@ -116,7 +116,111 @@ public class DijkstraAlgoritme {
         return path;
     }
 
+    public ArrayList<Pijl> getPijlenDiePassen(Verdiep van, Verdiep naar){
+
+        ArrayList<Pijl> returner = new ArrayList<Pijl>();
+
+        for(Pijl p: edges){
+            if(p.getVan() == van && p.getNaar() == naar){
+                returner.add(p);
+            }
+        }
+
+        return returner;
+    }
+
+
+    public LinkedList<Pijl> getPijlen(LinkedList<Verdiep> pad) {
+        //controleert voor elke stap welke radliften hieraan kunnen voldoen
+        Verdiep huidigVerdiep=null;
+        Verdiep volgendVerdiep=null;
+
+        ArrayList<Pijl> gevolgdePijlen = new ArrayList<Pijl>();
+
+        for(int i=0; i<pad.size()-1; i++){
+            huidigVerdiep = pad.get(i);
+            volgendVerdiep = pad.get(i+1);
+
+            ArrayList<Pijl> pijlenVoor1stap = this.getPijlenDiePassen(huidigVerdiep, volgendVerdiep);
+
+            if(pijlenVoor1stap.size()==1){
+                //dan hebben we hem
+
+                //voeg die toe aan de gebruikte pijlen
+                gevolgdePijlen.add(pijlenVoor1stap.get(0));
+                
+            }
+            else{//dus als der meer of 2 zijn
+
+                //kijk naar de vorig gebruikte lift
+                //dit kan enkel als de gevolgdePijlen arrayList niet leeg is
+                if(gevolgdePijlen.size() != 0) {
+
+                    //neem hetzelfde liftnummer als de lift die hiervoor werd gebruikt
+                        //hiervoor moeten we checken als dit liftnummer er in zit
+                        int vorigLiftNummer = pijlenVoor1stap.size();
+                        vorigLiftNummer = pijlenVoor1stap.get(vorigLiftNummer-1).getRadliftId(); //mad hackz
+                    
+                        //overloop de gebruikte pijlen, check als deze aanwezig is
+                        int zelfdeLiftId = bevatZelfdeLiftNummer(vorigLiftNummer, gevolgdePijlen);
+
+                        if(zelfdeLiftId == -1){
+                            //dan moeten we gewoon het kleinste liftnummer returnen
+                            Pijl pijlptr = getPijlMetLaagsteLiftNummer(pijlenVoor1stap);
+                            pijlenVoor1stap.add(pijlptr);
+                        }
+                        else{
+                            gevolgdePijlen.add(pijlenVoor1stap.get(zelfdeLiftId));
+                        }
+
+                    
+                    
+                    
+                    
+                    //als dit niet mogelijk is, neem dan de lift met het laagste liftnummer
+
+
+                }
+
+                else{
+                    //dus als de arraylist met gebruikte pijlen tot nu toe leeg is (1e stap)
+                    //neem dan gewoon het liftnummer met het laagste id
+
+                    Pijl pijlptr = getPijlMetLaagsteLiftNummer(pijlenVoor1stap);
+                    pijlenVoor1stap.add(pijlptr);
+
+                }
+
+
+            }
 
 
 
+        }
+
+
+    }
+
+    private Pijl getPijlMetLaagsteLiftNummer(ArrayList<Pijl> pijlenVoor1stap) {
+        Pijl pijlptr = null;
+
+        int laagstePijlNummer = Integer.MAX_VALUE;
+        for(Pijl p : pijlenVoor1stap){
+            if(p.getRadliftId() < laagstePijlNummer){
+                laagstePijlNummer = p.getRadliftId();
+                pijlptr = p;
+            }
+        }
+        return pijlptr;
+
+    }
+
+    private int bevatZelfdeLiftNummer(int vorigLiftNummer, ArrayList<Pijl> gevolgdePijlen) {
+        //returnt -1 als hij der niet in zit
+
+        for(int i=0; i<gevolgdePijlen.size(); i++){
+            if(gevolgdePijlen.get(i).getRadliftId()==vorigLiftNummer){return i;}
+        }
+        return (-1);
+    }
 }
