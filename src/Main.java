@@ -2,13 +2,13 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
+//http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html
 public class Main {
 
     public static void main(String[] args) {
 
 
-        /*Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         int aantalTestGevallen = Integer.parseInt(sc.nextLine());
 
@@ -34,13 +34,22 @@ public class Main {
                 //hiermee de juiste pijlen genereren
                 ArrayList<FakePijl> fakePijlen = FakePijl.genereerPijlen(onderVerdiep, bovenVerdiep, stap);
 
-
-
-                //deze lijst toevoegen aan de graaf
-                //for elke pijl in de arraylist ofzo
-                //graaf.voegPijlToe(radliftId, van,naar);
+                for(FakePijl fp : fakePijlen){
+                    graaf.voegPijlToe(radliftId,fp.getVan(), fp.getNaar());
+                }
 
             }
+
+            String[] laatsteLijn = sc.nextLine().split(" ");
+            int bronVerdiepId = Integer.parseInt(laatsteLijn[0]);
+            int doelVerdiepId = Integer.parseInt(laatsteLijn[1]);
+
+            //einde van de input
+
+
+            //nu nog questie van dijkstra toe te passen
+            DijkstraAlgoritme dijkstra = new DijkstraAlgoritme(graaf);
+            dijkstra.execute
 
 
 
@@ -53,10 +62,9 @@ public class Main {
 
 
         }//einde verwerking van 1 testgeval
-*/
 
 
-        ArrayList<FakePijl> fp = FakePijl.genereerPijlen(1,3,1);
+        //ArrayList<FakePijl> fp = FakePijl.genereerPijlen(1,3,1);
 
         System.out.println("klaar");
 

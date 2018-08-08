@@ -19,10 +19,12 @@ public class Graaf {
         pijlen.add(new Pijl(radliftId,verdiepen.get(van),verdiepen.get(naar) )  );
     }
 
+    //om te passen naar de dijkstralgoritme klasse
+    public ArrayList<Verdiep> getVerdiepen() {
+        return verdiepen;
+    }
 
-
-
-
-
-
+    public ArrayList<Pijl> getPijlen() {
+        return pijlen;
+    }
 }
