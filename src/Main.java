@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Scanner;
 //http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html
 public class Main {
@@ -49,9 +50,12 @@ public class Main {
 
             //nu nog questie van dijkstra toe te passen
             DijkstraAlgoritme dijkstra = new DijkstraAlgoritme(graaf);
-            dijkstra.execute
 
+            dijkstra.execute(graaf.getVerdiepen().get(bronVerdiepId));
 
+            LinkedList<Verdiep> pad = dijkstra.getPath(graaf.getVerdiepen().get(doelVerdiepId));
+
+            System.out.println("klaarder dan klaar");
 
 
 

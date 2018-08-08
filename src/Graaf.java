@@ -8,7 +8,7 @@ public class Graaf {
 
     public Graaf(int aantalVerdiepen){
         verdiepen = new ArrayList<Verdiep>();
-
+        pijlen = new ArrayList<Pijl>();
         for(int i=0 ; i<aantalVerdiepen; i++){
             verdiepen.add(new Verdiep(i));
         }

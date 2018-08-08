@@ -25,6 +25,10 @@ public class Verdiep{
     //andere methodes
 
     //misschien een equals methode
+    public boolean equals(Verdiep other) {
+        if(verdiepNummer == other.verdiepNummer){return true;}
+        else{return false;}
+    }
 
 
 
