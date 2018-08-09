@@ -55,7 +55,11 @@ public class Main {
 
             LinkedList<Verdiep> pad = dijkstra.getPath(graaf.getVerdiepen().get(doelVerdiepId));
             ArrayList<Pijl> gebruiktePijlen = dijkstra.getPijlen(pad);
-            System.out.println("klaarder dan klaar");
+            //System.out.println("klaarder dan klaar");
+
+            //met de gebruikte pijlen kunnen we de output genereern
+            String antwoord =testGevalId+1+" "+ genereerAntwoord(gebruiktePijlen);
+            System.out.println(antwoord);
 
 
 
@@ -71,6 +75,36 @@ public class Main {
         //ArrayList<FakePijl> fp = FakePijl.genereerPijlen(1,3,1);
 
         System.out.println("klaar");
+
+    }
+
+    private static String genereerAntwoord(ArrayList<Pijl> gebruiktePijlen) {
+
+        StringBuilder antwoord = new StringBuilder();
+
+        int huidigLiftNummer=0;
+        int huidigeEindBestemming=0;
+        int volgendLiftNummer=0;
+        int arrayListSize = gebruiktePijlen.size();
+        //beginsituatie
+        for(int i=0; i<arrayListSize-1; i++) {
+            huidigLiftNummer = gebruiktePijlen.get(i).getRadliftId();
+            volgendLiftNummer = gebruiktePijlen.get(i + 1).getRadliftId();
+
+            if (huidigLiftNummer != volgendLiftNummer) {
+                huidigeEindBestemming = gebruiktePijlen.get(i).getNaar().getVerdiepNummer();
+                antwoord.append("(" + huidigLiftNummer + "," + huidigeEindBestemming + ")");
+            }
+
+
+        }
+
+        huidigLiftNummer = gebruiktePijlen.get(arrayListSize-1).getRadliftId();
+        huidigeEindBestemming = gebruiktePijlen.get(arrayListSize-1).getNaar().getVerdiepNummer();
+        antwoord.append("(" + huidigLiftNummer + "," + huidigeEindBestemming + ")");
+
+        return antwoord.toString();
+
 
     }
 }
