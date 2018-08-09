@@ -130,19 +130,23 @@ public class DijkstraAlgoritme {
     }
 
 
-    public LinkedList<Pijl> getPijlen(LinkedList<Verdiep> pad) {
+    public ArrayList<Pijl> getPijlen(LinkedList<Verdiep> pad) {
         //controleert voor elke stap welke radliften hieraan kunnen voldoen
         Verdiep huidigVerdiep=null;
         Verdiep volgendVerdiep=null;
 
+        //dit is de lijst die we zullen returnen
+        //hier in mag der dus maar 1 keer iets toegevoegd worden per set
         ArrayList<Pijl> gevolgdePijlen = new ArrayList<Pijl>();
 
         for(int i=0; i<pad.size()-1; i++){
             huidigVerdiep = pad.get(i);
             volgendVerdiep = pad.get(i+1);
 
+
             ArrayList<Pijl> pijlenVoor1stap = this.getPijlenDiePassen(huidigVerdiep, volgendVerdiep);
 
+            //als der maar 1 gevonden is voor die van en naar
             if(pijlenVoor1stap.size()==1){
                 //dan hebben we hem
 
@@ -150,7 +154,9 @@ public class DijkstraAlgoritme {
                 gevolgdePijlen.add(pijlenVoor1stap.get(0));
                 
             }
-            else{//dus als der meer of 2 zijn
+
+            else{
+                //dus als der meer of 2 zijn
 
                 //kijk naar de vorig gebruikte lift
                 //dit kan enkel als de gevolgdePijlen arrayList niet leeg is
@@ -158,18 +164,23 @@ public class DijkstraAlgoritme {
 
                     //neem hetzelfde liftnummer als de lift die hiervoor werd gebruikt
                         //hiervoor moeten we checken als dit liftnummer er in zit
-                        int vorigLiftNummer = pijlenVoor1stap.size();
-                        vorigLiftNummer = pijlenVoor1stap.get(vorigLiftNummer-1).getRadliftId(); //mad hackz
+                        int vorigLiftNummer = gevolgdePijlen.size();
+                        vorigLiftNummer = gevolgdePijlen.get(vorigLiftNummer-1).getRadliftId(); //mad hackz
                     
                         //overloop de gebruikte pijlen, check als deze aanwezig is
-                        int zelfdeLiftId = bevatZelfdeLiftNummer(vorigLiftNummer, gevolgdePijlen);
+                        int zelfdeLiftId = bevatZelfdeLiftNummer(vorigLiftNummer, pijlenVoor1stap);
 
+                        //als het dus niet hetzelfde liftnummer bevat
                         if(zelfdeLiftId == -1){
                             //dan moeten we gewoon het kleinste liftnummer returnen
                             Pijl pijlptr = getPijlMetLaagsteLiftNummer(pijlenVoor1stap);
-                            pijlenVoor1stap.add(pijlptr);
+                            gevolgdePijlen.add(pijlptr);
                         }
                         else{
+                            //als het dus wel hetzelfde lift nummer bevat
+
+                            //in zelfdeliftId zit de plek van dit liftnummer
+                            //das door die methode daar 'bevatzelfdeliftnummer'
                             gevolgdePijlen.add(pijlenVoor1stap.get(zelfdeLiftId));
                         }
 
@@ -187,7 +198,7 @@ public class DijkstraAlgoritme {
                     //neem dan gewoon het liftnummer met het laagste id
 
                     Pijl pijlptr = getPijlMetLaagsteLiftNummer(pijlenVoor1stap);
-                    pijlenVoor1stap.add(pijlptr);
+                    gevolgdePijlen.add(pijlptr);
 
                 }
 
@@ -197,6 +208,26 @@ public class DijkstraAlgoritme {
 
 
         }
+
+
+        //nu nog de radlift id's van de pijlen aanpassen
+        // 1 = 1 of 2
+        //3 = 5 of 6
+        //als omhoog: huidignummer *2 -1
+        //als omlaag: huidigNummer*2
+        for(Pijl p: gevolgdePijlen){
+            if(p.getVan().getVerdiepNummer() < p.getNaar().getVerdiepNummer()){
+                //dan gaan we omhoog
+                p.setRadLiftId(     (p.getRadliftId()*2) -1);
+            }
+            else{
+                //dan gaan we omlaag
+                p.setRadLiftId( p.getRadliftId()*2);
+            }
+        }
+
+
+        return gevolgdePijlen;
 
 
     }

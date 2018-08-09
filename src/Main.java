@@ -54,7 +54,7 @@ public class Main {
             dijkstra.execute(graaf.getVerdiepen().get(bronVerdiepId));
 
             LinkedList<Verdiep> pad = dijkstra.getPath(graaf.getVerdiepen().get(doelVerdiepId));
-            LinkedList<Pijl> gebruiktePijlen = dijkstra.getPijlen(pad);
+            ArrayList<Pijl> gebruiktePijlen = dijkstra.getPijlen(pad);
             System.out.println("klaarder dan klaar");
 
 

@@ -14,6 +14,13 @@ public class Pijl {
         gewicht = 1;
     }
 
+    public Pijl(Pijl p){
+        radliftId= p.radliftId;
+        van = p.van;
+        naar = p.naar;
+        gewicht =1;
+    }
+
     //getters, setters
 
     public int getRadliftId() {
@@ -29,4 +36,7 @@ public class Pijl {
     }
 
 
+    public void setRadLiftId(int getal) {
+        radliftId = getal;
+    }
 }
